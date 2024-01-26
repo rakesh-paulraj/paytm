@@ -3,8 +3,10 @@ const zod =require("zod");
 const jwt=require("jsonwebtoken");
 const {JWT_SECRET}=require("../config");
 const User=require("../database/db");
-const User = require("../database/db");
+const middleware=require("../middleware/middleware");
+
 const router=express.Router();
+
 
 const signupbody=zod.object({
     username:zod.string.email(),
@@ -64,7 +66,7 @@ router.post("/signin",async (req,res)=>{
     })
     if (user) {
         const token = jwt.sign({
-            userId: user._id
+            userid: user._id
         }, JWT_SECRET);
   
         res.json({
