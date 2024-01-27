@@ -56,7 +56,7 @@ const signinbody=zod.object({
 router.post("/signin",async (req,res)=>{
     const {success}=signinbody.safeparse(req.body);
     if(!success){
-        res.status(404).json({
+        res.status(411).json({
             msg:"wrong inputs or user unavailable"
         })
     }
@@ -77,6 +77,28 @@ router.post("/signin",async (req,res)=>{
     res.status(411).json({
         message: "Error while logging in"
     })
+})
+updatebody=zod.object({
+    firstname:String,
+    lastname:String,
+    password:String
+})
+
+router.put("/",middleware,async function(req,res){
+    const {success}=updatebody.safeparse(req.body);
+    if(!success){
+        res.status(411).json({
+            msg:"worng inputs are sent "
+        })
+    }
+
+    await User.updateOne(req.body, {
+        _id: req.userId
+    })
+    res.json({
+        message:"User succesfully updated"
+    })
+
 })
 
 

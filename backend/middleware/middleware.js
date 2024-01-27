@@ -11,8 +11,13 @@ function middleware(req,res,next){
     const token=authmiddlware.split('')[1];
 try{
     const decoded=jwt.verify(token,JWT_SECRET);
-    req.userid=decoded.userid;
+    if (decoded.userid){
+        
+        req.userid=decoded.userid;
     next();
+
+    }
+    
 }
 catch{
     return res.status(403).json({});
