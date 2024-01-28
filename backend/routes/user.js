@@ -38,6 +38,11 @@ router.post("/signup",async (res,res)=>{
     })
     const userid=user._id;
 
+    await Account.create({
+        userid,
+        balance:1+Math.random()*10000
+    })
+
     const token=jwt.sign({
         userid
     },JWT_SECRET);
@@ -46,6 +51,7 @@ router.post("/signup",async (res,res)=>{
         message:"User created successfully",
         token:token
     })
+
 
 })
 const signinbody=zod.object({
