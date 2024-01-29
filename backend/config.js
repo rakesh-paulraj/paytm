@@ -1,4 +1,4 @@
 
-modules.exports={
+module.exports={
     JWT_SECRET:"PAYTMB"
 }

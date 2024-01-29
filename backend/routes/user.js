@@ -7,15 +7,14 @@ const middleware=require("../middleware/middleware");
 
 const router=express.Router();
 
-
-const signupbody=zod.object({
-    username:zod.string.email(),
-    firstname:zod.string(),
-    lastname:zod.string(),
-    password:zod.string()
+const signupbody = zod.object({
+    username: zod.string(),
+	firstName: zod.string(),
+	lastName: zod.string(),
+	password: zod.string()
 })
 
-router.post("/signup",async (res,res)=>{
+router.post("/signup",async (req,res)=>{
     const {success}=signupbody.safeparse(req.body);
     if(!success){
         res.status(411).json({
@@ -55,8 +54,8 @@ router.post("/signup",async (res,res)=>{
 
 })
 const signinbody=zod.object({
-    username:zod.String.email(),
-    password:zod.String()
+    username:zod.string(),
+    password:zod.string()
 })
 
 router.post("/signin",async (req,res)=>{
@@ -83,14 +82,37 @@ router.post("/signin",async (req,res)=>{
     res.status(411).json({
         message: "Error while logging in"
     })
-})
+});
 updatebody=zod.object({
     firstname:String,
     lastname:String,
     password:String
 })
+router.put("/", middleware, async (req, res) => {
+    const { success, data } = updateSchema.safeParse(req.body);
 
-router.put("/",middleware,async function(req,res){
+    if (!success) {
+        res.status(400).json({ msg: "Invalid credentials", errors: updateSchema.errors });
+        return;
+    }
+
+    const filter = { _id: req.userId }; 
+    const update = { $set: data };
+
+    try {
+        const result = await User.updateOne(filter, update);
+
+        if (result.modifiedCount > 0) {
+            res.json({ msg: 'Document updated successfully!' });
+        } else {
+            res.json({ msg: 'Document not found or no modifications were made.' });
+        }
+    } catch (error) {
+        console.error('Error updating document:', error);
+        res.status(500).json({ msg: 'Internal Server Error' });
+    }
+});
+/*router.put("/", middleware ,async function(req,res){
     const {success}=updatebody.safeparse(req.body);
     if(!success){
         res.status(411).json({
@@ -105,7 +127,7 @@ router.put("/",middleware,async function(req,res){
         message:"User succesfully updated"
     })
 
-})
+})*/
 router.get("/bulk",async function(req,res){
     const filter =req.query.filter || ""
 
