@@ -41,22 +41,28 @@ const signinbody=zod.object({
 })
 
 router.post("/signin",async (req,res)=>{
-    const body = req.body;
     
-    const { success } = signinbody.safeParse(body);
-    const dbCheck = await User.findOne({ username: body.username });
-    
-    if (success && !dbCheck) {
-        const user = await User.create(body);
-        
-        const balance = Math.round((Math.random() * 10000) * 100);
-        await Account.create({userid: user._id, balance: balance});
 
-        const token = jwt.sign({ userid: user._id }, JWT_SECRET);
-        res.json({ msg: "User created successfully", token: token });
-    } else {
-        res.status(411).json({ msg: "Email already taken / Incorrect inputs" });
+    const user = await User.findOne({
+        username: req.body.username,
+        password: req.body.password
+    });
+
+    if (user) {
+        const token = jwt.sign({
+            userid: user._id
+        }, JWT_SECRET);
+  
+        res.json({
+            token: token
+        })
+        return;
     }
+
+    
+    res.status(411).json({
+        message: "Error while logging in"
+    })
 });
 
   
@@ -82,22 +88,7 @@ router.put("/", middleware, async (req, res) => {
         message: "Updated successfully"
     })
 })
-/*router.put("/", middleware ,async function(req,res){
-    const {success}=updatebody.safeparse(req.body);
-    if(!success){
-        res.status(411).json({
-            msg:"worng inputs are sent "
-        })
-    }
 
-    await User.updateOne(req.body, {
-        _id: req.userid
-    })
-    res.json({
-        message:"User succesfully updated"
-    })
-
-})*/
 router.get("/bulk",async function(req,res){
     const filter =req.query.filter || ""
 
