@@ -3,7 +3,7 @@ const zod =require("zod");
 const jwt=require("jsonwebtoken");
 const {JWT_SECRET}=require("../config");
 const User=require("../database/db");
-const middleware=require("../middleware/middleware");
+const {middleware}=require("../middleware/middleware");
 
 const router=express.Router();
 
@@ -83,35 +83,29 @@ router.post("/signin",async (req,res)=>{
         message: "Error while logging in"
     })
 });
-updatebody=zod.object({
-    firstname:String,
-    lastname:String,
-    password:String
-})
-router.put("/", middleware, async (req, res) => {
-    const { success, data } = updateSchema.safeParse(req.body);
-
-    if (!success) {
-        res.status(400).json({ msg: "Invalid credentials", errors: updateSchema.errors });
-        return;
-    }
-
-    const filter = { _id: req.userId }; 
-    const update = { $set: data };
-
-    try {
-        const result = await User.updateOne(filter, update);
-
-        if (result.modifiedCount > 0) {
-            res.json({ msg: 'Document updated successfully!' });
-        } else {
-            res.json({ msg: 'Document not found or no modifications were made.' });
-        }
-    } catch (error) {
-        console.error('Error updating document:', error);
-        res.status(500).json({ msg: 'Internal Server Error' });
-    }
+  
+const updateBody = zod.object({
+	password: zod.string().optional(),
+    firstName: zod.string().optional(),
+    lastName: zod.string().optional(),
 });
+
+router.put("/", middleware, async (req, res) => {
+    const { success } = updateBody.safeParse(req.body)
+    if (!success) {
+        res.status(411).json({
+            message: "Error while updating information"
+        })
+    }
+
+    await User.updateOne(req.body, {
+        id: req.userId
+    })
+
+    res.json({
+        message: "Updated successfully"
+    })
+})
 /*router.put("/", middleware ,async function(req,res){
     const {success}=updatebody.safeparse(req.body);
     if(!success){
@@ -152,7 +146,7 @@ router.get("/bulk",async function(req,res){
 
         }))
     })
-})
+});
 
 
 
