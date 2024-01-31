@@ -35,10 +35,7 @@ router.post("/signup" ,async (req, res) => {
         res.status(411).json({ msg: "Email already taken / Incorrect inputs" });
     }
 });
-const signinbody=zod.object({
-    username:zod.string(),
-    password:zod.string()
-})
+
 
 router.post("/signin",async (req,res)=>{
     
