@@ -10,8 +10,8 @@ export const Signin = () => {
       <div className="rounded-lg bg-white w-80 text-center p-2 h-max px-4">
         <Heading label={"Sign in"} />
         <SubHeading label={"Enter your credentials to access your account"} />
-        <InputBox placeholder="example@gmail.com" label={"Email"} />
-        <InputBox placeholder="123456" label={"Password"} />
+        <InputBox placeholder="Your gmail" label={"Email"} />
+        <InputBox placeholder="Your password" label={"Password"} />
         <div className="pt-4">
           <Button label={"Sign in"} />
         </div>
