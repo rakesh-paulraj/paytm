@@ -7,7 +7,10 @@ import { useState } from 'react';
 
 export const Balancepage=()=>{
     const fetchbalance=async ()=>{
-       try{ const response= await axios.get("http://localhost:3000/api/v1/account/balance");
+       try{ const response= await axios.get("http://localhost:3000/api/v1/account/balance",
+       { headers: {
+        Authorization: "Bearer " + localStorage.getItem("token")
+    }});
             Setvalue(response.data.balance);
         }catch(error){
             console.error('Error fetching balance',error)
