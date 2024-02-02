@@ -20,10 +20,10 @@ export const Balancepage=()=>{
     return   <div className="bg-slate-300 h-screen flex justify-center items-center">
         
     
-     <div className="rounded-lg bg-white w-80 text-center p-2 h-max px-4">
-        <Balance value={value} />
-        <Button onClick={fetchbalance} label={"Check balance"}></Button>
-        </div>
+    <div className="rounded-lg bg-white w-80 text-center p-2 h-max px-4">
+       <Balance value={value} />
+       <Button onClick={fetchbalance} label={"Check balance"}></Button>
+       </div>
    
     </div>
 }
