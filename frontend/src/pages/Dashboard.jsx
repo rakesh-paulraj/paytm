@@ -1,14 +1,18 @@
-import {Appbar} from "../components/Appbar";
-import {Balance} from "../components/Balance";
-import {Users} from "../components/Users";
+import React from 'react';
+import { Appbar } from "../components/Appbar";
+import { Button } from "../components/Button";
+import { Users } from "../components/Users";
+import { useNavigate } from 'react-router-dom';
 
-
-export const Dashboard=()=>{
-    return <div>
-        <Appbar/>
-        <div className="m-8">
-            <Balance value={10000}></Balance>
-            <Users/>
-        </div>
+export const Dashboard = () => {
+  const navigate = useNavigate(); 
+  return (
+    <div>
+      <Appbar />
+      <div className="m-8">
+        <Button onClick={() => { navigate('/balance'); }} label="Balance"></Button>
+        <Users />
+      </div>
     </div>
+  );
 }
