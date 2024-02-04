@@ -37,7 +37,7 @@ router.post("/signup" ,async (req, res) => {
 });
 
 
-router.post("/signin",async (req,res)=>{
+router.post("/",async (req,res)=>{
     
 
     const user = await User.findOne({
