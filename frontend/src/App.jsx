@@ -12,7 +12,7 @@ import { Balancepage } from "./pages/Balancepage";
   
    return <div><BrowserRouter>
   <Routes>
-    <Route path="/signin" element={<Signin />}/>
+    <Route path="/" element={<Signin />}/>
     <Route path="/signup" element={<Signup/>}/>
     <Route path="/dashboard" element={<Dashboard/>}/>
     <Route path="/send" element={<SendMoney/>}/>
