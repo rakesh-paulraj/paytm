@@ -19,10 +19,8 @@ export const SendMoney = () => {
                 </div>
                 <div class="p-6">
                 <div class="flex items-center space-x-4">
-                    <div class="w-12 h-12 rounded-full bg-green-500 flex items-center justify-center">
-                    <span class="text-2xl text-white">{name[0].toUpperCase()}</span>
-                    </div>
-                    <h3 class="text-2xl font-semibold">{name}</h3>
+                    
+                    
                 </div>
                 <div class="space-y-4">
                     <div class="space-y-2">
@@ -51,7 +49,7 @@ export const SendMoney = () => {
                                 Authorization: "Bearer " + localStorage.getItem("token")
                             }
                         })
-                    }} class="justify-center rounded-md text-sm font-medium ring-offset-background transition-colors h-10 px-4 py-2 w-full bg-green-500 text-white">
+                    }} class="justify-center rounded-md text-sm font-medium ring-offset-background transition-colors h-10 px-4 py-2 w-full bg-blue-500 text-white">
                         Make Transfer
                     </button>
                 </div>
