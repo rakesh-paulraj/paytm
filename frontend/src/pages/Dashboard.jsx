@@ -8,7 +8,7 @@ export const Dashboard = () => {
   const navigate = useNavigate(); 
   return (
     <div>
-      <Appbar />
+      <Appbar user={"admin"} />
       <div className="m-8">
         <Button onClick={() => { navigate('/balance'); }} label="Balance"></Button>
         <Users />

@@ -25,7 +25,7 @@ export const Signin = () => {
         <InputBox  onChange={e=>{setPassword(e.target.value);}}placeholder="Your password" label={"Password"} />
         <div className="pt-4">
           <Button onClick={async ()=>{
-            const signin=await axios.post("http://localhost:3000/api/v1/user/signin",{
+            const signin=await axios.post("http://localhost:3000/api/v1/user/",{
               username,
               password
             });
